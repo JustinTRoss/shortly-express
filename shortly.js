@@ -33,30 +33,6 @@ function(req, res) {
   res.render('index');
 });
 
-//login get:
-app.get('/login',
-  function(req, res) {
-    res.render('login');
-  }
-);
-
-//login post:
-app.post('/login', 
-  function(req, res) {
-    var username = req.body.username; 
-    var password = req.body.password; 
-  }
-);
-
-//sign up get:
-app.get('/signup', 
-  function(req, res) {
-    res.render('signup');
-  }
-);
-
-//sign up post:
-app.
 
 
 app.get('/links', 
@@ -98,11 +74,54 @@ function(req, res) {
   });
 });
 
+//login get:
+app.get('/login',
+  function(req, res) {
+    res.render('login');
+  }
+);
+
+//sign up get:
+app.get('/signup', 
+  function(req, res) {
+    res.render('signup');
+  }
+);
+
+
 /************************************************************/
 // Write your authentication routes here
 /************************************************************/
 
+//login post:
+app.post('/login', 
+  function(req, res) {
+    var username = req.body.username; 
+    var password = req.body.password; 
 
+    new User({username: username, password: password})
+    .fetch()
+    .then((model) => {
+      if (model !== null) {
+        console.log('user found');
+      } else {
+        console.log('your estuff is incorrecto');
+      } }) 
+    .catch((err) => { console.log('oh nooo'); } );
+  }
+);
+
+//sign up post:
+app.post('/signup', 
+  function (req, res) {
+    var username = req.body.username; 
+    var password = req.body.password;
+
+    new User({username: username, password: password})
+    .save().then(function() { console.log('user added'); } )
+    .catch(function() { console.log( 'duplicate user'); } );
+  }
+);
 
 /************************************************************/
 // Handle the wildcard route last - if all other routes fail
