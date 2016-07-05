@@ -16,6 +16,14 @@ var User = db.Model.extend({
       user.attributes.password = hash; 
       console.log(user.attributes);
     });
+
+    // this.on('fetching', function(user) {
+    //   var password = user.attributes.password; 
+    //   var hash = bcrypt.hashSync(password);
+    //   console.log(hash);
+    //   bcrypt.compare(password, )
+    //   user.attributes.password = hash;
+    // });
   },
 
   link: function() {

@@ -2,6 +2,7 @@ var express = require('express');
 var util = require('./lib/utility');
 var partials = require('express-partials');
 var bodyParser = require('body-parser');
+var bcrypt = require('bcrypt-nodejs');
 
 
 var db = require('./app/config');
@@ -99,11 +100,11 @@ app.post('/login',
     var username = req.body.username; 
     var password = req.body.password; 
 
-    new User({username: username, password: password})
+    new User({username: username})
     .fetch()
     .then((model) => {
       if (model !== null) {
-        console.log('user found');
+        console.log(bcrypt.compareSync(password, model.attributes.password));
       } else {
         console.log('your estuff is incorrecto');
       } }) 
