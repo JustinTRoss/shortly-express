@@ -104,7 +104,9 @@ app.post('/login',
     .fetch()
     .then((model) => {
       if (model !== null) {
-        console.log(bcrypt.compareSync(password, model.attributes.password));
+        if (bcrypt.compareSync(password, model.attributes.password)) {
+          res.redirect('/');
+        }
       } else {
         console.log('your estuff is incorrecto');
       } }) 
